@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Your Card{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+{% endblock %}
+
+{% block content %}
+    <h2>Create Your Qr Card</h2>
+    <form action="/generate-pdf" method="post" class="qr-generator">
+        {{ form.hidden_tag() }}
+        <div class="input-box">
+            {{ form.fullName(class="form-control", placeholder="Enter your name") }}
+            {% for error in form.fullName.errors %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="input-box">
+            {{ form.email(class="form-control", placeholder="Enter your email address") }}
+            {% for error in form.email.errors %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="input-box">
+            {{ form.phone(id="phone", class="form-control",  placeholder="Enter your phone number") }}
+            {% for error in form.phone.errors %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="input-box button">
+            {{ form.submit(placeholder="Generate Card") }}
+        </div>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/phone-input.js') }}"></script>
+{% endblock %}
